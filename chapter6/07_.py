@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 wordFile = urlopen("http://pythonscraping.com/pages/AWordDocument.docx").read()
 wordFile = BytesIO(wordFile)
 document = ZipFile(wordFile)
-xml_content = document.read('word/document.xml')
+xml_content = document.read("word/document.xml")
+bsObj = BeautifulSoup(xml_content.decode("utf-8"), "xml")
+textElements = bsObj.findAll("w:t")
 
-wordObj = BeautifulSoup(xml_content.decode('utf-8', 'xml'), 'html.parser')
-textStrings = wordObj.findAll("w:t")
-for textElem in textStrings:
-    print(textElem.text)
+for textElement in textElements:
+    print(textElement.text)
